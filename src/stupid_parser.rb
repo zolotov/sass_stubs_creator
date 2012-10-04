@@ -25,7 +25,7 @@ class StupidParser
       argument_string.chop!
     end
     argument_string.split(",").map { |it|
-      it = it.strip
+      it = it.strip.split(" ", 2)[0]
       if it.start_with?("*")
         {:name => it[1..-1], :type => :array}
       else

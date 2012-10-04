@@ -15,6 +15,16 @@ describe StupidParser do
     ]
   end
 
+  it "should parse method with complex arguments" do
+    result = @parser.parse_text "def method_name(val, separator = Sass::Script::String.new(\"auto\"))"
+    result[:type].should == :method
+    result[:name].should == "method_name"
+    result[:arguments].should == [
+        {:name => "val"},
+        {:name => "separator"}
+    ]
+  end
+
   it "should parse comment" do
     result = @parser.parse_text "  # some comment line"
     result[:type].should == :comment
