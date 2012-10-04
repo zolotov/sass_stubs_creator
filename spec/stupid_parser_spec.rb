@@ -6,9 +6,13 @@ describe StupidParser do
   end
 
   it "should parse method" do
-    result = @parser.parse_text "def method_name(arg1)"
+    result = @parser.parse_text "def method_name(arg1, *arg2)"
     result[:type].should == :method
     result[:name].should == "method_name"
+    result[:arguments].should == [
+        {:name => "arg1"},
+        {:name => "arg2", :type => :array}
+    ]
   end
 
   it "should parse comment" do

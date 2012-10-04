@@ -7,7 +7,8 @@ class StupidParser
 
   def parse_text(text)
     if text.method?
-      return {:type => :method, :name => method_name_from(text)}
+      return {:type => :method, :name => method_name_from(text),
+              :arguments => arguments_from(text)}
     end
 
     if text.comment?
@@ -18,6 +19,21 @@ class StupidParser
   end
 
   private
+  def arguments_from text
+    argument_string = text.strip.split(/\s+|\(|\)/, 3)[2].strip
+    if argument_string.end_with?(")")
+      argument_string.chop!
+    end
+    argument_string.split(",").map { |it|
+      it = it.strip
+      if it.start_with?("*")
+        {:name => it[1..-1], :type => :array}
+      else
+        {:name => it}
+      end
+    }
+  end
+
   def comment_from text
     text.strip.sub(/^#/, "").strip
   end
