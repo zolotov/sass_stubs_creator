@@ -20,7 +20,12 @@ class StupidParser
 
   private
   def arguments_from text
-    argument_string = text.strip.split(/\s+|\(|\)/, 3)[2].strip
+    argument_string = text.strip.split(/\s+|\(|\)/, 3)[2]
+	if argument_string.nil?
+		return []
+	else
+		argument_string = argument_string.strip
+	end
     if argument_string.end_with?(")")
       argument_string.chop!
     end
