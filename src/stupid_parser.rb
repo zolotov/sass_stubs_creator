@@ -40,7 +40,7 @@ class StupidParser
   end
 
   def comment_from text
-    text.strip.sub(/^#/, "").strip
+    text.strip.sub(/^#/, "").sub(/\/\*(.*)\*\//, '\1').strip
   end
 
   def method_name_from text
